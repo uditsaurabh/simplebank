@@ -1,0 +1,35 @@
+# Go specific
+*.exe
+*.exe~
+*.dll
+*.so
+*.dylib
+*.test
+*.out
+_build/
+/docker-volumes/
+# Dependency directories (remove these if using `go mod`)
+/vendor/
+/Godeps/
+
+# Docker
+.dockerignore
+Dockerfile
+docker-compose.yml
+
+# Ignore Docker volumes
+docker-compose.override.yml
+docker-compose.override.yaml
+*.override.yml
+*.override.yaml
+
+# IDE specific
+.vscode/
+.idea/
+
+# Compiled binary for native builds
+*.o
+*.a
+
+# Binary
+bin/
