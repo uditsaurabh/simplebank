@@ -20,7 +20,7 @@ jobs:
         # Provide the password for postgres
         env:
           POSTGRES_USER: udit  
-          POSTGRES_PASSWORD: secret
+          POSTGRES_PASSWORD: root
           POSTGRES_DB: jobber_reviews
         options: >-
           --health-cmd pg_isready
