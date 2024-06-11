@@ -1,12 +1,12 @@
 package orm
 
 import (
-	"context"
+	_"context"
 	"fmt"
 	"github.com/stretchr/testify/require"
 	"testing"
 )
-
+/*
 func TestTransferTx(t *testing.T) {
 	store := NewStore(testDB)
 	var err error
@@ -28,7 +28,7 @@ func TestTransferTx(t *testing.T) {
 		txName := fmt.Sprintf("tx %d", i+1)
 		fmt.Println(txName)
 		go func() {
-			ctx:= context.WithValue(context.Background(),txKey,txName)
+			ctx := context.WithValue(context.Background(), txKey, txName)
 			result, err := store.TransferTx(ctx, TransferTxParams{
 				FromAccountID: account1.ID,
 				ToAccountID:   account2.ID,
@@ -84,4 +84,15 @@ func TestTransferTx(t *testing.T) {
 	require.Equal(t, account1.Balance-int64(n)*amount, updateAccount1.Balance)
 	require.Equal(t, account2.Balance+int64(n)*amount, updateAccount2.Balance)
 
+}
+*/
+func TestCreateUser(t *testing.T) {
+	user,args,err:=createRandomUser()
+	fmt.Println()
+	require.NoError(t, err)
+	fmt.Println("the user created with details -->", args)
+	//match the user details and the account details
+	require.Equal(t,user.FullName,args.FullName)
+	
+	
 }

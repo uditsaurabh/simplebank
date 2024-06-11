@@ -125,6 +125,42 @@ func (q *Queries) CreateTransfer(ctx context.Context, arg CreateTransferParams) 
 	return i, err
 }
 
+const createUser = `-- name: CreateUser :one
+INSERT INTO users (        
+        username,
+        hash_password,
+        full_name,
+        email
+    )
+VALUES ($1, $2, $3, $4) RETURNING username, hash_password, full_name, email, password_changes_at, created_at
+`
+
+type CreateUserParams struct {
+	Username     string
+	HashPassword string
+	FullName     string
+	Email        string
+}
+
+func (q *Queries) CreateUser(ctx context.Context, arg CreateUserParams) (User, error) {
+	row := q.db.QueryRowContext(ctx, createUser,
+		arg.Username,
+		arg.HashPassword,
+		arg.FullName,
+		arg.Email,
+	)
+	var i User
+	err := row.Scan(
+		&i.Username,
+		&i.HashPassword,
+		&i.FullName,
+		&i.Email,
+		&i.PasswordChangesAt,
+		&i.CreatedAt,
+	)
+	return i, err
+}
+
 const deleteAccount = `-- name: DeleteAccount :exec
 DELETE FROM accounts WHERE id = $1
 `
@@ -198,6 +234,24 @@ func (q *Queries) GetTransfer(ctx context.Context, id int64) (Transfer, error) {
 		&i.FromAccountID,
 		&i.ToAccountID,
 		&i.Amount,
+		&i.CreatedAt,
+	)
+	return i, err
+}
+
+const getUser = `-- name: GetUser :one
+SELECT username, hash_password, full_name, email, password_changes_at, created_at FROM users WHERE username = $1 LIMIT 1
+`
+
+func (q *Queries) GetUser(ctx context.Context, username string) (User, error) {
+	row := q.db.QueryRowContext(ctx, getUser, username)
+	var i User
+	err := row.Scan(
+		&i.Username,
+		&i.HashPassword,
+		&i.FullName,
+		&i.Email,
+		&i.PasswordChangesAt,
 		&i.CreatedAt,
 	)
 	return i, err

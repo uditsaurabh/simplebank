@@ -7,4 +7,5 @@ sql:
       go:
         package: "orm"
         out: "orm"
+        emit_interface: true
 

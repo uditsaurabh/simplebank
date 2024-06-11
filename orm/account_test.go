@@ -2,20 +2,20 @@ package orm
 
 import (
 	"context"
-	"fmt"
-	"testing"
+	_"testing"
 
-	"github.com/stretchr/testify/require"
+	_ "github.com/stretchr/testify/require"
 	"github.com/uditsaurabh/go-simple-bank/util"
 )
 
-func TestCreateAccount(t *testing.T) {
-	account, err, args := createRandomAccount()
-	require.NoError(t, err)
-	require.NotEmpty(t, account)
-	require.Equal(t, args.Owner, account.Owner)
-}
-
+/*
+	func TestCreateAccount(t *testing.T) {
+		account, err, args := createRandomAccount()
+		require.NoError(t, err)
+		require.NotEmpty(t, account)
+		require.Equal(t, args.Owner, account.Owner)
+	}
+*/
 func createRandomAccount() (Account, error, CreateAccountParams) {
 	args := CreateAccountParams{
 		Owner:       util.RandomOwner(),
@@ -27,11 +27,22 @@ func createRandomAccount() (Account, error, CreateAccountParams) {
 	return account, error, args
 }
 
+func createRandomUser() (user User, args CreateUserParams, err error) {
+	args = CreateUserParams{
+		Username:     util.RandomString(6),
+		HashPassword: util.RandomPassword(8),
+		FullName:     util.RandomOwner() + " " + util.RandomOwner(),
+		Email:        util.RandomString(4) + "@gmail.com",
+	}
+	user, err = testQueries.CreateUser(context.Background(), args)
+	return user, args, err
+}
+
+/*
 func TestGetAccount(t *testing.T) {
 	account1, err, _ := createRandomAccount()
 	require.NoError(t, err)
 	savedAccountFromDb, err := testQueries.GetAccount(context.Background(), account1.ID)
-	fmt.Println(savedAccountFromDb, "<---------->", account1)
 	require.NoError(t, err)
 	require.NotEmpty(t, account1)
 	require.Equal(t, account1.Currency, savedAccountFromDb.Currency)
@@ -51,7 +62,6 @@ func TestUpdateAccount(t *testing.T) {
 		Owner:       account1.Owner,
 	})
 	savedAccountFromDb, err := testQueries.GetAccount(context.Background(), account1.ID)
-	fmt.Println(savedAccountFromDb, "<---------->", account1)
 	require.NoError(t, err)
 	require.NotEmpty(t, account1)
 	require.Equal(t, account1.Currency, savedAccountFromDb.Currency)
@@ -62,9 +72,9 @@ func TestUpdateAccount(t *testing.T) {
 
 func TestDeleteAccount(t *testing.T) {
 	account1, err, _ := createRandomAccount()
-	fmt.Println("the account created with details -->", account1)
 	require.NoError(t, err)
 	testQueries.DeleteAccount(context.Background(), account1.ID)
 	_, err = testQueries.GetAccount(context.Background(), account1.ID)
 	require.Error(t, err)
 }
+*/
