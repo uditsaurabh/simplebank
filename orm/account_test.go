@@ -30,7 +30,7 @@ func createRandomAccount() (Account, error, CreateAccountParams) {
 func createRandomUser() (user User, args CreateUserParams, err error) {
 	args = CreateUserParams{
 		Username:     util.RandomString(6),
-		HashPassword: util.RandomPassword(8),
+		HashPassword: util.RandomPassword(15),
 		FullName:     util.RandomOwner() + " " + util.RandomOwner(),
 		Email:        util.RandomString(4) + "@gmail.com",
 	}
